@@ -20,7 +20,7 @@ We will be communicating with the Radar units over the CAN bus using Kvaser Leaf
 ## Additional Information for the ai-world-car-team-c2 team
 Read the full challenge in the link to Challenge Google Docs below.  Anyone is welcome to fork and branch.  Please PM diyjac in the nd013.slack.com ai-world-car-team-c2 to submit pull requests.
 
-### Do not use PylySync.
+### Do not use PolySync.
 Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 
 ## Documents:
