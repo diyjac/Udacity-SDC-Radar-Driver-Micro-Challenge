@@ -20,6 +20,9 @@ We will be communicating with the Radar units over the CAN bus using Kvaser Leaf
 ## Additional Information for the ai-world-car-team-c2 team
 Read the full challenge in the link to Challenge Google Docs below.  Anyone is welcome to fork and branch.  Please PM diyjac in the nd013.slack.com ai-world-car-team-c2 to submit pull requests.
 
+### Do not use PylySync.
+Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
+
 ## Documents:
   1. Challenge Google Docs:
    * https://docs.google.com/document/d/1a2NMVwxTx6m2rpDW3x3E5-KDsuuLbEmlSGozro_bKdA/edit
@@ -30,11 +33,4 @@ Read the full challenge in the link to Challenge Google Docs below.  Anyone is w
    * ESR Datasheet:    http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-esr.pdf
    * Delphi SRR2 link: http://www.delphi.com/manufacturers/auto/safety/active/sds
    * SRR2 Datasheet:   http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-srr2.pdf
-  4. Our interface to the ESR and SRR2?  Need verification...
-   * Site:            https://support.polysync.io/hc/en-us
-   * Basics:          https://support.polysync.io/hc/en-us/articles/217137387-PolySync-Basics
-   * Installation:    https://support.polysync.io/hc/en-us/articles/217026048-Installing-PolySync
-   * Troubleshooting: https://support.polysync.io/hc/en-us/categories/202584917-Detailed-Documentation
-   * ESR-2.5:         https://support.polysync.io/hc/en-us/articles/217357687-Delphi-ESR-2-5
-   * SRR-2:           https://support.polysync.io/hc/en-us/articles/217357697-Delphi-SRR-RSDS
 
