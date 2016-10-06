@@ -26,8 +26,11 @@ Read the full challenge in the link to Challenge Google Docs below.  Anyone is w
   2. Link to Kvaser Leaf Light v2 Docs:
    * https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
   3. Link to Delphi ESR and SRR2 (Short Range Radar-2).
-   * http://www.delphi.com/manufacturers/auto/safety/active/electronically-scanning-radar
-   * http://www.delphi.com/manufacturers/auto/safety/active/sds
+   * ESR:  http://www.delphi.com/manufacturers/auto/safety/active/electronically-scanning-radar
+   * SRR2: http://www.delphi.com/manufacturers/auto/safety/active/sds
   4. Our interface to the ESR and SRR2?  Need verification...
-   * https://support.polysync.io/hc/en-us/articles/217357687-Delphi-ESR-2-5
+   * General Docs:    https://support.polysync.io/hc/en-us
+   * Troubleshooting: https://support.polysync.io/hc/en-us/categories/202584917-Detailed-Documentation
+   * ESR-2.5:         https://support.polysync.io/hc/en-us/articles/217357687-Delphi-ESR-2-5
+   * SRR-2:           https://support.polysync.io/hc/en-us/articles/217357697-Delphi-SRR-RSDS
 
