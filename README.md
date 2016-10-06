@@ -29,7 +29,9 @@ Read the full challenge in the link to Challenge Google Docs below.  Anyone is w
    * ESR:  http://www.delphi.com/manufacturers/auto/safety/active/electronically-scanning-radar
    * SRR2: http://www.delphi.com/manufacturers/auto/safety/active/sds
   4. Our interface to the ESR and SRR2?  Need verification...
-   * General Docs:    https://support.polysync.io/hc/en-us
+   * Site:            https://support.polysync.io/hc/en-us
+   * Basics:          https://support.polysync.io/hc/en-us/articles/217137387-PolySync-Basics
+   * Installation:    https://support.polysync.io/hc/en-us/articles/217026048-Installing-PolySync
    * Troubleshooting: https://support.polysync.io/hc/en-us/categories/202584917-Detailed-Documentation
    * ESR-2.5:         https://support.polysync.io/hc/en-us/articles/217357687-Delphi-ESR-2-5
    * SRR-2:           https://support.polysync.io/hc/en-us/articles/217357697-Delphi-SRR-RSDS
