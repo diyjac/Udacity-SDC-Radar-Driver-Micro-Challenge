@@ -46,5 +46,5 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
    * ROS Sensors:       http://wiki.ros.org/Sensors
    * ROS Node/Driver:   http://answers.ros.org/question/202000/ros-node-ros-driver-and-ros-wrapper/
    * ROS Driver Video:  https://www.youtube.com/watch?v=pagC2WXT1x0
-   * ECI Driver:        http://www.ixxat.com/support/file-and-documents-download/drivers/eci-driver
+   * Kvaser linuxcan:   http://www.kvaser.com/software/7330130980754/V5_18_0/linuxcan.tar.gz
 
