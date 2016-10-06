@@ -38,3 +38,8 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
    * Github link:      https://github.com/ros-industrial/ros_canopen
    * Issues:           https://github.com/ros-industrial/ros_canopen/issues
    * ROS Index:        http://rosindex.github.io/p/canopen_chain_node/github-ros-industrial-ros_canopen/
+  5. Link to ROS Device Driver (Roll our own) - Interface Candidate 2.
+   * ROS Tutorial:     http://wiki.ros.org/ROS/Tutorials/Creating%20a%20Simple%20Hardware%20Driver
+   * ROS Sensors:      http://wiki.ros.org/Sensors
+   * ROS Node/Driver:  http://answers.ros.org/question/202000/ros-node-ros-driver-and-ros-wrapper/
+   * ROS Driver Video: https://www.youtube.com/watch?v=pagC2WXT1x0
