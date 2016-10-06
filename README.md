@@ -23,6 +23,8 @@ Read the full challenge in the link to Challenge Google Docs below.  Anyone is w
 ### Do not use PolySync.
 Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 
+### Build Environment: ROS Indigo and Ubuntu 14.04
+
 ## Documents:
   1. Challenge Google Docs:
    * https://docs.google.com/document/d/1a2NMVwxTx6m2rpDW3x3E5-KDsuuLbEmlSGozro_bKdA/edit
