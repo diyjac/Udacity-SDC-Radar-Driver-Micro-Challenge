@@ -9,8 +9,8 @@ Unfortunately, our sensors aren’t supported by ROS, the messaging and control 
 Read the full challenge in the link to Challenge Google Docs below.  Anyone is welcome to fork and branch.  Please PM diyjac in the nd013.slack.com ai-world-car-team-c2 to submit pull requests.
 
 ## Documents:
-..1 Challenge Google Docs:
-... https://docs.google.com/document/d/1a2NMVwxTx6m2rpDW3x3E5-KDsuuLbEmlSGozro_bKdA/edit
-..2 Link to Kvaser Leaf Light v2 Docs:
-... https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
+  1. Challenge Google Docs:
+   * https://docs.google.com/document/d/1a2NMVwxTx6m2rpDW3x3E5-KDsuuLbEmlSGozro_bKdA/edit
+  2. Link to Kvaser Leaf Light v2 Docs:
+   * https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
 
