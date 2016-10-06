@@ -31,17 +31,20 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
   2. Link to Kvaser Leaf Light v2 Docs:
    * https://www.kvaser.com/product/kvaser-leaf-light-hs-v2/
   3. Link to Delphi ESR and SRR2 (Short Range Radar-2).
-   * Delphi ESR link:  http://www.delphi.com/manufacturers/auto/safety/active/electronically-scanning-radar
-   * ESR Datasheet:    http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-esr.pdf
-   * Delphi SRR2 link: http://www.delphi.com/manufacturers/auto/safety/active/sds
-   * SRR2 Datasheet:   http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-srr2.pdf
+   * Delphi ESR link:   http://www.delphi.com/manufacturers/auto/safety/active/electronically-scanning-radar
+   * ESR Datasheet:     http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-esr.pdf
+   * Delphi SRR2 link:  http://www.delphi.com/manufacturers/auto/safety/active/sds
+   * SRR2 Datasheet:    http://www.autonomoustuff.com/wp-content/uploads/2016/08/delphi-srr2.pdf
   4. Link to CANopen driver framework for ROS Indigo (experimental - LGPL-3.0) - Interface Candidate 1.
-   * Overview:         http://wiki.ros.org/ros_canopen
-   * Github link:      https://github.com/ros-industrial/ros_canopen
-   * Issues:           https://github.com/ros-industrial/ros_canopen/issues
-   * ROS Index:        http://rosindex.github.io/p/canopen_chain_node/github-ros-industrial-ros_canopen/
+   * Overview:          http://wiki.ros.org/ros_canopen
+   * Github link:       https://github.com/ros-industrial/ros_canopen
+   * Issues:            https://github.com/ros-industrial/ros_canopen/issues
+   * ROS Index:         http://rosindex.github.io/p/canopen_chain_node/github-ros-industrial-ros_canopen/
+   * SocketCAN Driver:  http://www.ixxat.com/support/file-and-documents-download/drivers/socketcan-driver
   5. Link to ROS Device Driver (Roll our own) - Interface Candidate 2.
-   * ROS Tutorial:     http://wiki.ros.org/ROS/Tutorials/Creating%20a%20Simple%20Hardware%20Driver
-   * ROS Sensors:      http://wiki.ros.org/Sensors
-   * ROS Node/Driver:  http://answers.ros.org/question/202000/ros-node-ros-driver-and-ros-wrapper/
-   * ROS Driver Video: https://www.youtube.com/watch?v=pagC2WXT1x0
+   * ROS Tutorial:      http://wiki.ros.org/ROS/Tutorials/Creating%20a%20Simple%20Hardware%20Driver
+   * ROS Sensors:       http://wiki.ros.org/Sensors
+   * ROS Node/Driver:   http://answers.ros.org/question/202000/ros-node-ros-driver-and-ros-wrapper/
+   * ROS Driver Video:  https://www.youtube.com/watch?v=pagC2WXT1x0
+   * ECI Driver:        http://www.ixxat.com/support/file-and-documents-download/drivers/eci-driver
+
