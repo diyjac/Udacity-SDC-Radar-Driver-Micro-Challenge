@@ -80,7 +80,7 @@ static void check(char* id, canStatus stat)
 
 static void printUsageAndExit(char *prgName)
 {
-  printf("Usage: '%s <channel>'\n", prgName);
+  printf("Usage: '%s <channel> <captureFile>'\n", prgName);
   exit(1);
 }
 
@@ -121,13 +121,16 @@ void notifyCallback(canNotifyData *data) {
   return;
 }
 
+static FILE *fp = NULL;
+
 int main(int argc, char *argv[])
 {
   canHandle hnd;
   canStatus stat;
   int channel;
+  char *captureFilename = NULL;
 
-  if (argc != 2) {
+  if (argc != 3) {
     printUsageAndExit(argv[0]);
   }
 
@@ -135,12 +138,17 @@ int main(int argc, char *argv[])
     char *endPtr = NULL;
     errno = 0;
     channel = strtol(argv[1], &endPtr, 10);
-    if ( (errno != 0) || ((channel == 0) && (endPtr == argv[1])) ) {
+    captureFilename = argv[2];
+
+    if ( (errno != 0) || ((channel == 0) && (endPtr == argv[2])) ) {
       printUsageAndExit(argv[0]);
     }
   }
 
+  printf("Capturing messages to file '%s'\n", captureFilename);
   printf("Reading messages on channel %d\n", channel);
+
+  fp = fopen(captureFilename, "wb");
 
   /* Allow signals to interrupt syscalls */
   signal(SIGINT, sighand);
@@ -176,34 +184,15 @@ int main(int argc, char *argv[])
     unsigned long time;
 
     stat = canReadWait(hnd, &id, &msg, &dlc, &flag, &time, READ_WAIT_INFINITE);
+    msgCounter++;
+    printf("writing msg %d!\n", msgCounter);
 
-    if (stat == canOK) {
-      msgCounter++;
-      if (flag & canMSG_ERROR_FRAME) {
-        printf("(%d) ERROR FRAME", msgCounter);
-      }
-      else {
-        unsigned j;
-
-        printf("(%d) id:%ld dlc:%u data: ", msgCounter, id, dlc);
-        if (dlc > 8) {
-          dlc = 8;
-        }
-        for (j = 0; j < dlc; j++){
-          printf("%2.2x ", msg[j]);
-        }
-      }
-      printf(" flags:0x%x time:%lu\n", flag, time);
-    }
-    else {
-      if (errno == 0) {
-        check("\ncanReadWait", stat);
-      }
-      else {
-        perror("\ncanReadWait error");
-      }
-    }
-
+    fwrite(&stat, sizeof(canStatus), sizeof(1), fp);
+    fwrite(&id, sizeof(long), sizeof(1), fp);
+    fwrite(&time, sizeof(long), sizeof(1), fp);
+    fwrite(&flag, sizeof(int), sizeof(1), fp);
+    fwrite(&dlc, sizeof(int), sizeof(1), fp);
+    fwrite(&msg, sizeof(char), sizeof(msg), fp);
   } while (stat == canOK);
 
 ErrorExit:
@@ -213,6 +202,10 @@ ErrorExit:
   usleep(50*1000); // Sleep just to get the last notification.
   stat = canClose(hnd);
   check("canClose", stat);
+
+  // close the capture file...
+  fclose(fp);
+  printf("Capture file '%s' closed!\n", captureFilename);
 
   return 0;
 }
