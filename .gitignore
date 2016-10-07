@@ -11,6 +11,12 @@ linuxcan/canlib/examples/*
 linuxcan/canlib/*.c
 linuxcan/canlib/*.d
 linuxcan/canlib/*.h
+linuxcan/canlib/VCanFunctions.o
+linuxcan/canlib/canlib.o
+linuxcan/canlib/dlc.o
+linuxcan/canlib/libcanlib.so.1
+linuxcan/canlib/libcanlib.so.1.1.0
+linuxcan/canlib/linkedlist.o
 linuxcan/common/*
 linuxcan/config.mak
 linuxcan/COPYING
