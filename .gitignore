@@ -3,7 +3,34 @@ __pycache__/
 *.py[cod]
 *$py.class
 
-# C extensions
+# linuxcan include and makefiles
+linuxcan/10-kvaser.rules
+linuxcan/canlib/Makefile
+linuxcan/canlib/README
+linuxcan/canlib/examples/*
+linuxcan/canlib/*.c
+linuxcan/canlib/*.d
+linuxcan/canlib/*.h
+linuxcan/common/*
+linuxcan/config.mak
+linuxcan/COPYING
+linuxcan/COPYING.BSD
+linuxcan/COPYING.GPL
+linuxcan/doc
+linuxcan/include/*
+linuxcan/leaf/*
+linuxcan/linlib/*
+linuxcan/Makefile
+linuxcan/mhydra/*
+linuxcan/moduleinfo.txt
+linuxcan/pcican
+linuxcan/pcican2
+linuxcan/pciefd
+linuxcan/README
+linuxcan/usbcanII
+linuxcan/virtualcan
+
+# C extension
 *.so
 
 # Distribution / packaging
