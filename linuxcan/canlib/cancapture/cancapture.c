@@ -162,7 +162,8 @@ int main(int argc, char *argv[])
     return -1;
   }
 
-  stat = canSetNotify(hnd, notifyCallback, canNOTIFY_RX | canNOTIFY_TX | canNOTIFY_ERROR | canNOTIFY_STATUS | canNOTIFY_ENVVAR, (char*)0);
+  // stat = canSetNotify(hnd, notifyCallback, canNOTIFY_RX | canNOTIFY_TX | canNOTIFY_ERROR | canNOTIFY_STATUS | canNOTIFY_ENVVAR, (char*)0);
+  stat = canSetNotify(hnd, notifyCallback, canNOTIFY_ERROR | canNOTIFY_STATUS, (char*)0);
   check("canSetNotify", stat);
 
   stat = canSetBusParams(hnd, canBITRATE_500K, 0, 0, 0, 0, 0);
@@ -175,28 +176,6 @@ int main(int argc, char *argv[])
   if (stat != canOK) {
     goto ErrorExit;
   }
-
-  // unsigned short canRADIATE = 0x4F18;
-  // char *message = (char *)malloc(8);
-  // message[0] = 0;
-  // message[1] = 0;
-  // message[2] = 0;
-  // message[3] = 0;
-  // message[4] = 0;
-  // message[5] = 0;
-  // message[6] = 0xBF;
-  // message[7] = 0;
-
-  // stat = canWrite(hnd, canRADIATE, message, 8, 0);
-  // check("canWrite", stat);
-  // if (stat != canOK) {
-    // goto ErrorExit;
-  // }
-  // stat = canWriteSync(hnd, 1000);
-  // check("canWriteSync", stat);
-  // if (stat != canOK) {
-    // goto ErrorExit;
-  // }
 
   do {
     long id;
@@ -215,20 +194,7 @@ int main(int argc, char *argv[])
     fwrite(&flag, sizeof(int), sizeof(1), fp);
     fwrite(&dlc, sizeof(int), sizeof(1), fp);
     fwrite(&msg, sizeof(char), sizeof(msg), fp);
-    usleep(1000); // Sleep - not stop the messages
-
-    // if ((msgCounter % 500) == 0) {
-      // stat = canWrite(hnd, canRADIATE, message, 8, 0);
-      // check("canWrite", stat);
-      // if (stat != canOK) {
-        // goto ErrorExit;
-      // }
-      // stat = canWriteSync(hnd, 1000);
-      // check("canWriteSync", stat);
-      // if (stat != canOK) {
-        // goto ErrorExit;
-      // }
-    // }
+    usleep(3000); // Sleep - not stop the messages
 
   } while (stat == canOK);
 
