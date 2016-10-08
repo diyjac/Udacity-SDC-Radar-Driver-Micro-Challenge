@@ -71,12 +71,15 @@
 #include <linux/delay.h>
 #include <linux/proc_fs.h>
 #include <linux/seq_file.h>
+#include <linux/fs.h>
 #if LINUX_VERSION_CODE < KERNEL_VERSION(3, 4, 0)
 #   include <asm/system.h>
 #endif
 #include <asm/bitops.h>
+#include <asm/segment.h>
 #include <asm/uaccess.h>
 #include <linux/pci.h>
+#include <linux/buffer_head.h>
 
 
 // Kvaser definitions

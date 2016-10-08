@@ -147,7 +147,7 @@ int main(int argc, char *argv[])
   siginterrupt(SIGINT, 1);
 
   /* Open channels, parameters and go on bus */
-  hnd = canOpenChannel(channel, canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
+  hnd = canOpenChannel(channel, 0);
   if (hnd < 0) {
     printf("canOpenChannel %d", channel);
     check("", hnd);

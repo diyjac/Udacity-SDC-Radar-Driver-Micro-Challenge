@@ -155,7 +155,7 @@ int main(int argc, char *argv[])
   siginterrupt(SIGINT, 1);
 
   /* Open channels, parameters and go on bus */
-  hnd = canOpenChannel(channel, canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
+  hnd = canOpenChannel(channel, 0 ); // canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
   if (hnd < 0) {
     printf("canOpenChannel %d", channel);
     check("", hnd);
@@ -176,6 +176,28 @@ int main(int argc, char *argv[])
     goto ErrorExit;
   }
 
+  // unsigned short canRADIATE = 0x4F18;
+  // char *message = (char *)malloc(8);
+  // message[0] = 0;
+  // message[1] = 0;
+  // message[2] = 0;
+  // message[3] = 0;
+  // message[4] = 0;
+  // message[5] = 0;
+  // message[6] = 0xBF;
+  // message[7] = 0;
+
+  // stat = canWrite(hnd, canRADIATE, message, 8, 0);
+  // check("canWrite", stat);
+  // if (stat != canOK) {
+    // goto ErrorExit;
+  // }
+  // stat = canWriteSync(hnd, 1000);
+  // check("canWriteSync", stat);
+  // if (stat != canOK) {
+    // goto ErrorExit;
+  // }
+
   do {
     long id;
     unsigned char msg[8];
@@ -193,6 +215,21 @@ int main(int argc, char *argv[])
     fwrite(&flag, sizeof(int), sizeof(1), fp);
     fwrite(&dlc, sizeof(int), sizeof(1), fp);
     fwrite(&msg, sizeof(char), sizeof(msg), fp);
+    usleep(1000); // Sleep - not stop the messages
+
+    // if ((msgCounter % 500) == 0) {
+      // stat = canWrite(hnd, canRADIATE, message, 8, 0);
+      // check("canWrite", stat);
+      // if (stat != canOK) {
+        // goto ErrorExit;
+      // }
+      // stat = canWriteSync(hnd, 1000);
+      // check("canWriteSync", stat);
+      // if (stat != canOK) {
+        // goto ErrorExit;
+      // }
+    // }
+
   } while (stat == canOK);
 
 ErrorExit:
