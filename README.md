@@ -24,20 +24,27 @@ Read the full challenge in the link to Challenge Google Docs below.  Anyone is w
 Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 
 ### Build Environment: ROS Indigo and Ubuntu 14.04
-  1.  Install Ubuntu 14.04:         http://releases.ubuntu.com/14.04/
-  2.  Install ROS Indigo:           http://wiki.ros.org/indigo/Installation/Ubuntu
-  3.  Clone this repository:        git clone https://github.com/diyjac/Udacity-SDC-Radar-Driver-Micro-Challenge.git
-  4.  Download Kvaser linuxcan:     http://www.kvaser.com/software/7330130980754/V5_18_0/linuxcan.tar.gz
-  5.  Change directory:             cd Udacity-SDC-Radar-Driver-Micro-Challenge/
-  6.  Untar linuxcan.tar.gz:        tar zxvf ~/Download/linuxcan.tar.gz
-  5.  Change directory:             cd linuxcan
-  7.  Make install:                 sudo make install
-  8.  Install vcanplayback (alpha): cd vcanplayback; make install; sudo ./installscript.sh
-  9.  Make cancapture (alpha):      cd ../canlib/cancapture; make
-  10. Verify (alpah):               ./listChannels
+  1.  Install Ubuntu 14.04:              http://releases.ubuntu.com/14.04/
+  2.  Install ROS Indigo:                http://wiki.ros.org/indigo/Installation/Ubuntu
+  3.  Clone this repository:             git clone https://github.com/diyjac/Udacity-SDC-Radar-Driver-Micro-Challenge.git
+  4.  Download Kvaser linuxcan:          http://www.kvaser.com/software/7330130980754/V5_18_0/linuxcan.tar.gz
+  5.  Change directory:                  cd Udacity-SDC-Radar-Driver-Micro-Challenge/
+  6.  Untar linuxcan.tar.gz:             tar zxvf ~/Download/linuxcan.tar.gz
+  7.  Change directory:                  cd linuxcan
+  8.  Make install:                      sudo make install
+  9.  Copy Sample data to /tmp:          cp ../sampleData/rawESR6.data /tmp/rawESR.data 
+  10. Install vcanplayback (alpha):      cd vcanplayback; make install; sudo ./installscript.sh
+  11. Start vcanplayback kernel module:  sudo ./vcanplayback.sh start
+  12. Make cancapture (alpha):           cd ../canlib/cancapture; make
+  13. Verify (alpha):                    ./listChannels
    *  Found 1 channel(s).
    *  channel  0 = Kvaser Virtual CAN,	0-00000-00000-0, 0, 0.0.0.0 
 
+### Raw ESR data format (fixed length records)
+| Info  | stat  | id    | time  | flag  | dlc   | msg   |
+| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
+| Size  |     4 |     8 |     8 |     4 |     4 |     8 |
+| Type  | enum  | long  | epoch | int   | int   | char[8] |
 
 ## Documents:
   1. Challenge Google Docs:
