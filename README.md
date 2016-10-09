@@ -46,6 +46,15 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 | Size  |     4 |     8 |     8 |     4 |     4 |     8 |
 | Type  | enum  | long  | epoch | int   | int   | char[8] |
 
+| Label | Size | Type | Description
+| :---: | :---: | :---: | :---: |
+| stat  |     4 | enum | Enumerated status - see Stat Enum table below |
+| id    |     8 | long | 8 byte message Id |
+| time  |     8 | epoch | CAN syncTime |
+| flag  |     4 | unsigned int | CAN syncFlag |
+| dlc   |     4 | unsigned int | bytes in message (<8) |
+| msg   |     8 | char[8] | message |
+
 ### Stat Enum
 | Label | Value | Description | Troubleshoot |
 | :---: | :---: | :---: | :---: |
