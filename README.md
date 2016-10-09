@@ -41,11 +41,6 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
    *  channel  0 = Kvaser Virtual CAN,	0-00000-00000-0, 0, 0.0.0.0 
 
 ### Raw ESR data format (fixed length records)
-| Info  | stat  | id    | time  | flag  | dlc   | msg   |
-| :---: | :---: | :---: | :---: | :---: | :---: | :---: |
-| Size  |     4 |     8 |     8 |     4 |     4 |     8 |
-| Type  | enum  | long  | epoch | int   | int   | char[8] |
-
 | Label | Size | Type | Description
 | :---: | :---: | :---: | :---: |
 | stat  |     4 | enum | Enumerated status - see Stat Enum table below |
