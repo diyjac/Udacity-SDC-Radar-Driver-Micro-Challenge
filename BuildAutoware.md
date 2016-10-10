@@ -3,7 +3,7 @@
 ### Build
 ```
 cd docker/ros-indigo-autoware
-docker build . -t ai-world-car:ros-indigo-autoware
+docker build -t ai-world-car:ros-indigo-autoware .
 ```
 ### Run
 ```
