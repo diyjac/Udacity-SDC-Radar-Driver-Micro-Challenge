@@ -14,3 +14,12 @@ docker run -it --rm \
    -v "$HOME/.Xauthority:/root/.Xauthority:rw" \
    ai-world-car:ros-indigo-autoware /bin/bash
 ```
+### TODO https://github.com/CPFL/Autoware
+```
+cd $HOME
+$ git clone https://github.com/CPFL/Autoware.git
+$ cd ~/Autoware/ros/src
+$ catkin_init_workspace
+$ cd ../
+$ ./catkin_make_release
+```
