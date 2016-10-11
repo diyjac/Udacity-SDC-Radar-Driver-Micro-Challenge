@@ -60,6 +60,7 @@
 // virtual functions
 //
 
+#include <linux/module.h>
 #include <linux/kernel.h>
 #include <linux/init.h>
 #include <linux/sched.h>
@@ -76,10 +77,8 @@
 #   include <asm/system.h>
 #endif
 #include <asm/bitops.h>
-#include <asm/segment.h>
 #include <asm/uaccess.h>
 #include <linux/pci.h>
-#include <linux/buffer_head.h>
 
 
 // Kvaser definitions
@@ -162,7 +161,12 @@ static VCanHWInterface hwIf = {
 // prototype:
 static int virtualSend (void *void_chanData);
 
-
+// read file from /tmp
+static char *path = "/tmp/rawESR.data";
+static struct file *filp = NULL;
+static struct inode *inode = NULL;
+static off_t fsize = 0;
+static char *buf;
 
 //======================================================================
 // Wrapper for common function
@@ -568,6 +572,8 @@ static int virtualTransmitMessage (VCanChanData *vChd, CAN_MSG *m)
 static int virtualInitData (VCanCardData *vCard)
 {
     int chNr;
+    loff_t startpos;
+    mm_segment_t oldfs;
     vCard->driverData = &driverData;
     vCanInitData(vCard);
     for (chNr = 0; chNr < vCard->nrChannels; chNr++) {
@@ -584,6 +590,25 @@ static int virtualInitData (VCanCardData *vCard)
         hChd->busparams.tseg2_brs = 16;
         hChd->busparams.sjw_brs = 16;
     }
+
+    oldfs = get_fs();
+    set_fs(get_ds());
+
+    filp = filp_open(path, O_RDONLY, 0);
+    if (IS_ERR(filp)) {
+       return 0;
+    }
+
+    startpos = 0;
+    inode = filp->f_path.dentry->d_inode;
+    fsize = inode->i_size;
+    buf = (char *) kmalloc(fsize, GFP_ATOMIC);
+
+    oldfs = get_fs();
+    set_fs(get_ds());
+    vfs_read(filp, buf, fsize, &startpos);
+    set_fs(oldfs);
+    filp_close(filp, NULL);
 
     return 0;
 }
