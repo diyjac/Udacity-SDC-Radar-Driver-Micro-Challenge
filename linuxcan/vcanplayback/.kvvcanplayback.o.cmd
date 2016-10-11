@@ -1,0 +1,1 @@
+cmd_/home/user/Udacity-SDC-Radar-Driver-Micro-Challenge/linuxcan/vcanplayback/kvvcanplayback.o := ld -m elf_x86_64   -r -o /home/user/Udacity-SDC-Radar-Driver-Micro-Challenge/linuxcan/vcanplayback/kvvcanplayback.o /home/user/Udacity-SDC-Radar-Driver-Micro-Challenge/linuxcan/vcanplayback/vcanplayback.o 
