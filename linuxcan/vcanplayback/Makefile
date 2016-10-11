@@ -69,4 +69,5 @@ else
 	RUNDIR := $(PWD)
 endif
 
+KV_DEBUG_ON=1
 include $(RUNDIR)/../config.mak

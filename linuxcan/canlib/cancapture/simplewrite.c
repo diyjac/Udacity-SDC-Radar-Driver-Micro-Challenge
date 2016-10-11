@@ -142,7 +142,14 @@ int main(int argc, char *argv[])
     return -1;
   }
 
+  stat = canBusOff(hnd);
+  check("canBusOff", stat);
+  if (stat != canOK) {
+    goto ErrorExit;
+  }
+
   stat = canSetBusParams(hnd, canBITRATE_500K, 0, 0, 0, 0, 0);
+  // stat = canSetBusParams(hnd, canBITRATE_500K, 10, 5, 1, 1, 0);
   check("canSetBusParams", stat);
   if (stat != canOK) {
     goto ErrorExit;
@@ -157,7 +164,7 @@ int main(int argc, char *argv[])
     goto ErrorExit;
   }
 
-  unsigned short canRADIATE = 0x4F18;
+  unsigned short canRADIATE = 0x04F1;
   char *message = (char *)malloc(8);
   message[0] = 0;
   message[1] = 0;
@@ -172,7 +179,7 @@ int main(int argc, char *argv[])
   if (stat != canOK) {
     goto ErrorExit;
   }
-  stat = canWriteSync(hnd, 1000);
+  stat = canWriteSync(hnd, canRADIATE);
   check("canWriteSync", stat);
   if (stat != canOK) {
     goto ErrorExit;
