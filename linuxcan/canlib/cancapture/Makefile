@@ -66,6 +66,7 @@ OBJS =\
 	timedomains\
 	writeloop\
 	busstat\
+	can_writer \
 	cancapture \
 
 ifeq ($(KV_DEBUG_ON),1)

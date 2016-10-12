@@ -19,6 +19,7 @@ linuxcan/canlib/libcanlib.so.1.1.0
 linuxcan/canlib/linkedlist.o
 linuxcan/canlib/cancapture/busparms
 linuxcan/canlib/cancapture/busstat
+linuxcan/canlib/cancapture/can_writer
 linuxcan/canlib/cancapture/cancapture
 linuxcan/canlib/cancapture/cancount
 linuxcan/canlib/cancapture/canfdmonitor
