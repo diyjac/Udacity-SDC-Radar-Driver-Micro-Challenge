@@ -128,7 +128,7 @@ int main (int argc, char *argv[])
     for (j=1; j<(int)dlc; j++) {
        printf(" 0x%x", msg[j]);
     }
-    printf(" with flag=%d to channel %d\n", flag, channel);
+    printf("' with flag=%d to channel %d\n", flag, channel);
   }
 
   /* Use sighand as our signal handler */
