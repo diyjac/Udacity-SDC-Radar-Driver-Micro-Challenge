@@ -188,8 +188,10 @@ int main (int argc, char *argv[])
 
   /* Open channels, parameters and go on bus */
   if (fd) {
+    printf("canOpenChannel %d with canOPEN_NO_INIT_ACCESS\n", channel);
     h = canOpenChannel(channel, canOPEN_NO_INIT_ACCESS | canOPEN_OVERRIDE_EXCLUSIVE | canOPEN_ACCEPT_VIRTUAL | canOPEN_CAN_FD);
   } else {
+    printf("canOpenChannel %d with canOPEN_EXCLUSIVE\n", channel);
     h = canOpenChannel(channel, canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
   }
   if (h < 0) {
