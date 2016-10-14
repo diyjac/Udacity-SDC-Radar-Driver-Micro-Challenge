@@ -56,12 +56,12 @@
  */
 
 #include <canlib.h>
+#include "canstat.h"
 #include <stdio.h>
 #include <signal.h>
 #include <errno.h>
 #include <unistd.h>
 #include "vcanevt.h"
-
 
 static void check(char* id, canStatus stat)
 {
@@ -135,25 +135,30 @@ int main(int argc, char *argv[])
 
   /* Open channel, set parameters and go on bus */
 
-  hnd = canOpenChannel(channel, canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
+  // KFC hnd = canOpenChannel(channel, canOPEN_EXCLUSIVE | canOPEN_REQUIRE_EXTENDED | canOPEN_ACCEPT_VIRTUAL);
+  hnd = canOpenChannel(channel, 0);
   if (hnd < 0) {
     printf("canOpenChannel %d", channel);
     check("", hnd);
     return -1;
   }
 
+/*
   stat = canBusOff(hnd);
   check("canBusOff", stat);
   if (stat != canOK) {
     goto ErrorExit;
   }
+*/
 
+/* KFC
   stat = canSetBusParams(hnd, canBITRATE_500K, 0, 0, 0, 0, 0);
   // stat = canSetBusParams(hnd, canBITRATE_500K, 10, 5, 1, 1, 0);
   check("canSetBusParams", stat);
   if (stat != canOK) {
     goto ErrorExit;
   }
+*/
 
   stat = canSetNotify(hnd, notifyCallback, canNOTIFY_RX | canNOTIFY_TX | canNOTIFY_ERROR | canNOTIFY_STATUS | canNOTIFY_ENVVAR, (char*)0);
   check("canSetNotify", stat);
@@ -184,6 +189,9 @@ int main(int argc, char *argv[])
   if (stat != canOK) {
     goto ErrorExit;
   }
+      
+
+  printf("Sent a message id %d\n", canRADIATE);
 
 ErrorExit:
 
@@ -195,8 +203,4 @@ ErrorExit:
 
   return 0;
 }
-
-
-
-
 
