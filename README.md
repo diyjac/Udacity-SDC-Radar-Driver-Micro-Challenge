@@ -30,7 +30,7 @@ Use rosbag to see json of track records
 
 ### Current Development Candidate 1
 
-```./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py```
+./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py
 
 ### Issues
   *  Need to develop ROS message to hold ESR Json data.
