@@ -26,11 +26,11 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 ### Initial Testing
 Use rosbag to see json of track records
 
-```./view_rosbag_radar.py --dataset ~/Downloads/radar_2016-10-12-15-59-24-walking.bag | python -mjson.tool | less```
+`./view_rosbag_radar.py --dataset ~/Downloads/radar_2016-10-12-15-59-24-walking.bag | python -mjson.tool | less`
 
 ### Current Development Candidate 1
 
-./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py
+`./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py`
 
 ### Issues
   *  Need to develop ROS message to hold ESR Json data.
