@@ -34,8 +34,9 @@ Use rosbag to see json of track records
 
 ### Issues
   *  Need to develop ROS message to hold ESR Json data.
-     1.  Autoware has message compilation for C++, but not for Python
-     2.  May need to port esr_listener.py to C++
+     1.  ESR data is hierarchical, but the current parser flattens the data.
+     2.  Autoware has message compilation for C++, but not for Python
+     3.  May need to port esr_listener.py to C++, and produce a hierarchical parser.
 
 ### Build Environment: ROS Indigo and Ubuntu 14.04
   1.  Install Ubuntu 14.04:              http://releases.ubuntu.com/14.04/
