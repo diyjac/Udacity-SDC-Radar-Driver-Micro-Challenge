@@ -25,14 +25,17 @@ Need to communicate directly with the Kvaser Leaf Light v2.0 USB interface.
 
 ### Initial Testing
 Use rosbag to see json of track records
-./view_rosbag_radar.py --dataset ~/Downloads/radar_2016-10-12-15-59-24-walking.bag | python -mjson.tool | less
+
+```./view_rosbag_radar.py --dataset ~/Downloads/radar_2016-10-12-15-59-24-walking.bag | python -mjson.tool | less```
 
 ### Current Development Candidate 1.
-./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py
+
+```./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py```
 
 #### Issues.
-Need to develop ROS message to hold ESR Json data.  Autoware has message compilation for C++, but not for Python
-May need to port esr_listener.py to C++
+  *  Need to develop ROS message to hold ESR Json data.
+     1.  Autoware has message compilation for C++, but not for Python
+     2.  May need to port esr_listener.py to C++
 
 ### Build Environment: ROS Indigo and Ubuntu 14.04
   1.  Install Ubuntu 14.04:              http://releases.ubuntu.com/14.04/
