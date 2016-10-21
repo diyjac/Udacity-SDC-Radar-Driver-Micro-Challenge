@@ -28,11 +28,11 @@ Use rosbag to see json of track records
 
 ```./view_rosbag_radar.py --dataset ~/Downloads/radar_2016-10-12-15-59-24-walking.bag | python -mjson.tool | less```
 
-### Current Development Candidate 1.
+### Current Development Candidate 1
 
 ```./ros/src/sensing/drivers/can/packages/kvaser/nodes/esr_listener/esr_listener.py```
 
-#### Issues.
+### Issues
   *  Need to develop ROS message to hold ESR Json data.
      1.  Autoware has message compilation for C++, but not for Python
      2.  May need to port esr_listener.py to C++
