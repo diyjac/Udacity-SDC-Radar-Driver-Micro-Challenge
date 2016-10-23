@@ -4,7 +4,7 @@ esr_listener.py: version 0.1.0
 
 History:
 2016/10/19: Initial version to record processed ESR radar data to ROS bag.
-2016/10/21: Refactor. Add readRawFromROS
+2016/10/21: Refactor. Add readRawFromROS. Add visualier.
 """
 
 import argparse
@@ -17,6 +17,7 @@ import rospy
 import rosbag
 import std_msgs.msg
 import json
+from esr_visualizer import RadarVisualizer
 
 idBase = 1279
 
@@ -357,7 +358,7 @@ class RadarDataParser():
         self.data["auto_align_angle"] = msg[6]
         self.data["path_id_acc_stat"] = msg[7]
 
-def readRawFromROS(topic='/can_raw', dataset='data.bag', skip=0):
+def readRawFromROS(topic='/can_raw', dataset='data.bag', skip=0, visual=False):
     bag = rosbag.Bag(dataset, 'r')
     startsec = 0
 
@@ -377,6 +378,8 @@ def readRawFromROS(topic='/can_raw', dataset='data.bag', skip=0):
     #   time: 1219812
 
     radar = RadarDataParser(debug)
+    if visual:
+        visualizer = RadarVisualizer()
     for topic, msg, t in bag.read_messages(topics=[topic]):
         if startsec == 0:
             startsec = t.to_sec()
@@ -386,15 +389,17 @@ def readRawFromROS(topic='/can_raw', dataset='data.bag', skip=0):
                 skipping = skip
         else:
             if t.to_sec() > skipping:
-                if topic in ['/can_raw']:
+                if topic in [topic]:
                     if debug == True:
                         sys.stdout.write(topic)
                         sys.stdout.write(" seq:%d " % msg.header.seq)
                     radarData = radar.parseMessage(msg.id, msg.dat, msg.len, msg.flag, msg.time)
                     if radarData:
-                        sys.stdout.write(json.dumps(radarData,sort_keys=True, indent=4, separators=(',', ': ')) + '\n')
+                        #KFC sys.stdout.write(json.dumps(radarData,sort_keys=True, indent=4, separators=(',', ': ')) + '\n')
+                        if visual:
+                            visualizer.update(radarData)
 
-def readRawFromCAN(ch, debug):
+def readRawFromCAN(ch, debug, visual=False):
     c1 = canlib.canlib()
     radar = RadarDataParser(debug)
     channels = c1.getNumberOfChannels()
@@ -418,8 +423,9 @@ def readRawFromCAN(ch, debug):
     ch1.write(1256, message, 8)
 
     rospy.init_node('esr_node', anonymous=True)
-
     pub = rospy.Publisher('esr_front', kvaser.msg.CANESR, queue_size=10)
+    if visual:
+        visualizer = RadarVisualizer()
 
     r = rospy.Rate(10)
     r.sleep()
@@ -439,10 +445,12 @@ def readRawFromCAN(ch, debug):
             #   time: 1219812
             #
 
-            trackdata = radar.parseMessage(msgId, msg, dlc, flg, time)
+            radarData = radar.parseMessage(msgId, msg, dlc, flg, time)
             if len(trackdata) > 0:
-                #KFC rossend(std.msg.String(data=json.dumps(trackdata)))
-                pub.publish(json.dumps(trackdata))
+                #KFC rossend(std.msg.String(data=json.dumps(radarData)))
+                pub.publish(json.dumps(radarData))
+                if visual:
+                    visualizer.update(radarData)
             
         except (canlib.canNoMsg) as ex:
             pass
@@ -460,6 +468,7 @@ if __name__ == "__main__":
     parser.add_argument('--mode', type=str, default='CAN', help='Read Radar raw from "CAN" bus or "ROS" topic')
     parser.add_argument('--skip', type=int, default="0", help='skip seconds')   
     parser.add_argument('--topic', type=str, default='/can_raw', help='Read Radar raw from a ROS topic')
+    parser.add_argument('--visual', action='store_true', default=False, help='Visualize the Radar tracks')
     args = parser.parse_args()
 
     ch = args.channel
@@ -467,6 +476,6 @@ if __name__ == "__main__":
     mode = args.mode
 
     if mode == 'ROS':
-        readRawFromROS(topic=args.topic, dataset=args.dataset, skip=args.skip)
+        readRawFromROS(topic=args.topic, dataset=args.dataset, skip=args.skip, visual=args.visual)
     else:
-        readRawFromCAN(ch, debug) 
+        readRawFromCAN(ch, debug, visual=args.visual) 
