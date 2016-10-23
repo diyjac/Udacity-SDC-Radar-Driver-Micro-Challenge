@@ -4,14 +4,17 @@ esr_listener.py: version 0.1.0
 
 History:
 2016/10/19: Initial version to record processed ESR radar data to ROS bag.
+2016/10/21: Refactor. Add readRawFromROS
 """
 
 import argparse
 import sys
+import copy
 import datetime
 import struct
 import canlib
 import rospy
+import rosbag
 import std_msgs.msg
 import json
 
@@ -24,8 +27,7 @@ class RadarDataParser():
         self.debug = debug
         self.msg_counter = 0 # Variable that keeps track of the iteration of msg 1344 we are on
 
-    def parseMessage(self, msgId, rawmsg, dlc, flg, time):
-        msgToFunc = {
+        self.msgToFunc = {
             1248: self.status_one,
             1249: self.status_two,
             1250: self.status_three,
@@ -103,7 +105,10 @@ class RadarDataParser():
             1511: self.additional_status_four,
             1512: self.additional_status_five,
         }
-        msg = {}
+
+    def parseMessage(self, msgId, rawmsg, dlc, flg, time):
+        retData = {}
+        msg = []
         if self.debug == True:
             sys.stdout.write("In radar_data_parser and this is a message\n")
             sys.stdout.write("msgId: %9d  time: %9d  flg: 0x%02x  dlc: %d " % (msgId, time, flg, dlc))
@@ -115,25 +120,27 @@ class RadarDataParser():
         if self.debug == True:
             sys.stdout.write("\n")
 
-        if msgId in msgToFunc:
+
+        if msgId in self.msgToFunc:
             # This message is valid, so we need to parse it
             if msgId >= 1280 and msgId <= 1343:
-                msgToFunc[msgId](msgId, msg)
+                self.msgToFunc[msgId](msgId, msg)
             else:
                 if self.debug == True:
                     sys.stdout.write("In radar_data_parser and this is msgId %d\n" % (msgId))
                 if (msgId == 1344):
-                    msgToFunc[msgId](self.msg_counter, msg)
+                    self.msgToFunc[msgId](self.msg_counter, msg)
                     self.msg_counter += 1
                 elif (msgId > 1344 and self.msg_counter > 0):
-                    msgToFunc[msgId](msg)
+                    self.msgToFunc[msgId](msg)
                     self.msg_counter = 0
                 else:
-                    msgToFunc[msgId](msg)
+                    self.msgToFunc[msgId](msg)
                     if (msgId == 1512):
-                        msg = self.data
+                        # Don't return data until now
+                        retData = copy.copy(self.data)
                         self.data = {} # Start with a fresh object
-        return msg
+        return retData 
 
     def track_msg(self, msgId, msg):
         # """ message ID 500-53F or 1280-1343 """
@@ -350,17 +357,44 @@ class RadarDataParser():
         self.data["auto_align_angle"] = msg[6]
         self.data["path_id_acc_stat"] = msg[7]
 
+def readRawFromROS(topic='/can_raw', dataset='data.bag', skip=0):
+    bag = rosbag.Bag(dataset, 'r')
+    startsec = 0
 
-if __name__ == "__main__":
+    #
+    # msg format:
+    #   header:
+    #     seq: 120556
+    #     stamp:
+    #       secs: 1476173337
+    #       nsecs: 165327047
+    #     frame_id: ''
+    #   count: 120556
+    #   id: 1899
+    #   len: 8
+    #   dat: [2, 0, 0, 0, 0, 0, 0, 0]
+    #   flag: 0
+    #   time: 1219812
 
-    parser = argparse.ArgumentParser(description='Udacity SDC Micro Challenge Radar viewer')
-    parser.add_argument('--channel', type=int, default=0, help='CANbus channel where target ESR radar is located')
-    parser.add_argument('--debug', action='store_true', default=False, help='display debug messages')
-    args = parser.parse_args()
+    radar = RadarDataParser(debug)
+    for topic, msg, t in bag.read_messages(topics=[topic]):
+        if startsec == 0:
+            startsec = t.to_sec()
+            if skip < 24*60*60:
+                skipping = t.to_sec() + skip
+            else:
+                skipping = skip
+        else:
+            if t.to_sec() > skipping:
+                if topic in ['/can_raw']:
+                    if debug == True:
+                        sys.stdout.write(topic)
+                        sys.stdout.write(" seq:%d " % msg.header.seq)
+                    radarData = radar.parseMessage(msg.id, msg.dat, msg.len, msg.flag, msg.time)
+                    if radarData:
+                        sys.stdout.write(json.dumps(radarData,sort_keys=True, indent=4, separators=(',', ': ')) + '\n')
 
-    ch = args.channel
-    debug = args.debug
-  
+def readRawFromCAN(ch, debug):
     c1 = canlib.canlib()
     radar = RadarDataParser(debug)
     channels = c1.getNumberOfChannels()
@@ -385,11 +419,11 @@ if __name__ == "__main__":
 
     rospy.init_node('esr_node', anonymous=True)
 
-    pub = rospy.Publisher('can_esr', kvaser.msg.CANESR, queue_size=10)
+    pub = rospy.Publisher('esr_front', kvaser.msg.CANESR, queue_size=10)
 
     r = rospy.Rate(10)
     r.sleep()
-    pub.publish(s)
+    # pub.publish(s)
     r.sleep()
 
     while not rospy.is_shutdown():
@@ -407,7 +441,8 @@ if __name__ == "__main__":
 
             trackdata = radar.parseMessage(msgId, msg, dlc, flg, time)
             if len(trackdata) > 0:
-                rossend(std.msg.String(data=json.dumps(trackdata)))
+                #KFC rossend(std.msg.String(data=json.dumps(trackdata)))
+                pub.publish(json.dumps(trackdata))
             
         except (canlib.canNoMsg) as ex:
             pass
@@ -416,3 +451,22 @@ if __name__ == "__main__":
 
     rospy.spin()
 
+if __name__ == "__main__":
+
+    parser = argparse.ArgumentParser(description='Udacity SDC Micro Challenge Radar viewer')
+    parser.add_argument('--channel', type=int, default=0, help='CANbus channel where target ESR radar is located')
+    parser.add_argument('--dataset', type=str, default='dataset.bag', help='Dataset/ROS Bag name')
+    parser.add_argument('--debug', action='store_true', default=False, help='display debug messages')
+    parser.add_argument('--mode', type=str, default='CAN', help='Read Radar raw from "CAN" bus or "ROS" topic')
+    parser.add_argument('--skip', type=int, default="0", help='skip seconds')   
+    parser.add_argument('--topic', type=str, default='/can_raw', help='Read Radar raw from a ROS topic')
+    args = parser.parse_args()
+
+    ch = args.channel
+    debug = args.debug
+    mode = args.mode
+
+    if mode == 'ROS':
+        readRawFromROS(topic=args.topic, dataset=args.dataset, skip=args.skip)
+    else:
+        readRawFromCAN(ch, debug) 
