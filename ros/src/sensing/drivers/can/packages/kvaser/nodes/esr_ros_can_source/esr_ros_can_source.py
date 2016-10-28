@@ -103,15 +103,17 @@ class RadarDataParser():
             1511: self.additional_status_four,
             1512: self.additional_status_five,
         }
-        msg = {}
+        retData = {}
+        msg = []
         if self.debug == True:
             sys.stdout.write("In radar_data_parser and this is a message\n")
             sys.stdout.write("msgId: %9d  time: %9d  flg: 0x%02x  dlc: %d " % (msgId, time, flg, dlc))
 
+        msg = rawmsg
         for i in xrange(dlc):
-            msg[:0] = [ int(struct.unpack('B', rawmsg[i])[0]) ]
             if self.debug == True:
                 sys.stdout.write(" 0x%0.2x " % (msg[i]))
+
         if self.debug == True:
             sys.stdout.write("\n")
 
@@ -131,9 +133,9 @@ class RadarDataParser():
                 else:
                     msgToFunc[msgId](msg)
                     if (msgId == 1512):
-                        msg = self.data
+                        retData = self.data
                         self.data = {} # Start with a fresh object
-        return msg
+        return retData
 
     def track_msg(self, msgId, msg):
         # """ message ID 500-53F or 1280-1343 """
@@ -401,9 +403,9 @@ if __name__ == "__main__":
             #   time: 1219812
             #
 
-            trackdata = radar.parseMessage(msgId, msg, dlc, flg, time)
-            if len(trackdata) > 0:
-                rossend(std.msg.String(data=json.dumps(trackdata)))
+            radarData = radar.parseMessage(msgId, msg, dlc, flg, time)
+            if len(radarData) > 0:
+                pub.publish(json.dumps(radarData))
             
         except (canlib.canNoMsg) as ex:
             pass

@@ -14,11 +14,11 @@ import numpy as np
 import argparse
 import sys
 import numpy as np
-import pygame
 import rospy
 import datetime
 import struct
 import json
+import std_msgs
 
 try:
     import cv2
@@ -62,9 +62,11 @@ class RadarVisualizer(object):
         cv2.imshow("Radar", self.img)
         cv2.waitKey(2)
 
+visualizer = RadarVisualizer()
 def callback(data):
+    print "data: ", data
     object = json.loads(data.data)
-    RadarVisualizer(object)
+    visualizer.update(object)
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Udacity SDC Micro Challenge Radar viewer')
@@ -78,8 +80,7 @@ if __name__ == "__main__":
     # name for our 'listener' node so that multiple listeners can
     # run simultaneously.
     rospy.init_node('ros_esr_visualizer', anonymous=True)
-
-    rospy.Subscriber("esr_front", String, callback)
+    rospy.Subscriber("esr_front", std_msgs.msg.String, callback)
 
     # spin() simply keeps python from exiting until this node is stopped
     rospy.spin()
