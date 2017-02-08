@@ -55,7 +55,7 @@ add_message_files(
   #DIRECTORY
  # msg
   FILES
-  CANPacket.msg
+ # CANPacket.msg
   CANESR.msg
 #  Vibration.msg
 )
@@ -129,28 +129,24 @@ include_directories(
 #   ${catkin_LIBRARIES}
 # )
 if(EXISTS "/usr/include/canlib.h")
-add_executable(can_listener nodes/can_listener/can_listener.cpp)
-target_link_libraries(can_listener ${catkin_LIBRARIES})
-target_link_libraries(can_listener canlib)
-add_dependencies(can_listener kvaser_generate_messages_cpp)
+##KFC add_executable(esr_listener nodes/esr_listener/esr_listener.py)
+##KFC target_link_libraries(esr_listener ${catkin_LIBRARIES})
+##KFC target_link_libraries(esr_listener canlib)
+##KFC add_dependencies(esr_listener kvaser_generate_messages_cpp)
 
-add_executable(can_writer nodes/can_writer/can_writer.cpp)
-target_link_libraries(can_writer ${catkin_LIBRARIES})
-target_link_libraries(can_writer canlib)
-add_dependencies(can_writer kvaser_generate_messages_cpp)
+#add_executable(can_writer nodes/can_writer/can_writer.cpp)
+#target_link_libraries(can_writer ${catkin_LIBRARIES})
+#target_link_libraries(can_writer canlib)
+#add_dependencies(can_writer kvaser_generate_messages_cpp)
 
 else()
-message("'canlib' is not installed. 'can_listener' is not built.")
-message("'canlib' is not installed. 'can_writer' is not built.")
+message("'canlib' is not installed. 'esr_listener' is not built.")
+#message("'canlib' is not installed. 'esr_writer' is not built.")
 endif()
 
-add_executable(can_converter nodes/can_converter/can_converter.cpp)
-target_link_libraries(can_converter ${catkin_LIBRARIES})
-add_dependencies(can_converter kvaser_generate_messages_cpp)
-
-add_executable(can_draw nodes/can_draw/can_draw.cpp)
-target_link_libraries(can_draw ${catkin_LIBRARIES})
-add_dependencies(can_draw kvaser_generate_messages_cpp)
+#add_executable(can_draw nodes/can_draw/can_draw.cpp)
+#target_link_libraries(can_draw ${catkin_LIBRARIES})
+#add_dependencies(can_draw kvaser_generate_messages_cpp)
 
 #add_executable(vib_controler src/vib_controler.cpp)
 #target_link_libraries(vib_controler ${catkin_LIBRARIES})
