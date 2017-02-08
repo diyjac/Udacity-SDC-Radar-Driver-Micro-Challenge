@@ -128,3 +128,11 @@ Use rosbag to see json of track records
    * ROS Driver Video:  https://www.youtube.com/watch?v=pagC2WXT1x0
    * Kvaser linuxcan:   http://www.kvaser.com/software/7330130980754/V5_18_0/linuxcan.tar.gz
 
+## Contributing
+
+All help is welcome! Udacity-SDC-Radar-Driver-Micro-Challenge project is an ongoing and live project.  If you'd like to add a new ROS node, open an issue and even submit it yourself.  If you're new to open source or to ROS, I'll help you get your first commit in, ping me.
+
+## License
+
+Udacity-SDC-Radar-Driver-Micro-Challenge is released under [MIT License](./LICENSE)
+
